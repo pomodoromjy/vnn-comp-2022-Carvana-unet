@@ -24,7 +24,7 @@ import onnxruntime
 import numpy as np
 from PIL import Image
 import torch.nn.functional as F
-from generate_properties import gt_mask_process
+
 
 onnxpath = '../net/onnx/unet_simp_small.onnx'
 imgpath = '../dataset/test_images/'
@@ -51,30 +51,26 @@ def test_onnx():
     img.unsqueeze_(0)
     net_out_mask = Image.open(simp_net_pre_mask + imagename)
     net_out_mask = np.asarray(net_out_mask)
-    net_out_mask = torch.from_numpy(gt_mask_process(net_out_mask))
+    net_out_mask = torch.from_numpy(net_out_mask)
     net_out_mask = net_out_mask.to(device=device, dtype=torch.float32)
-    net_out_mask.unsqueeze_(0)
+    net_out_mask.unsqueeze_(0).unsqueeze_(0)
     # ONNX RUNTIME
     '''
     onnx: input and output
-    input: 
-    img: the input image, refers to the X in the vnnlib;
-    net_out_mask: the predicted mask by the model(not the user defined ground truth mask), refers to the GT in the vnnlib;
+    input:
+    model_input: The size of input(refers to the X in the vnnlib) is [1, 4, 31, 47], where 1 is the batchsize, 
+    4 is the number of channels, 31 and 47 are the height and the width of samples respectively. 
+    The first three channels represent RGB values of images. The last channel represents the model-produced mask, 
+    which is used for calculating the number of correctly predicted pixes by the model.
     output:
-    ort_outs[0]: the logits of network output, refers to the Y_0 in the vnnlib;
-    ort_outs[1]: the number of correctly predicted pixes by the onnx model, refers to the Y_1 in the vnnlib;
+    out_num: the number of correctly predicted pixes by the onnx model, refers to the Y in the vnnlib;
     '''
     inname = [input.name for input in ort_session.get_inputs()]
     outname = [output.name for output in ort_session.get_outputs()]
-    ort_inputs = {inname[0]:to_numpy(img),inname[1]:to_numpy(net_out_mask)}
-    ort_outs = ort_session.run(outname, ort_inputs)  # list.
-    # post process.
-    img_out = torch.from_numpy(ort_outs[0]).to(device=device, dtype=torch.float32)
-    probs = F.softmax(img_out,dim=1)[0]
-    pre_mask = F.one_hot(probs.argmax(dim=0), 2).permute(2, 0, 1)
-    mask_out = pre_mask[1]
-    #out_num: total numbers of correct predicted pixes
-    out_num = ort_outs[1]
+    model_input = torch.cat([img,net_out_mask],1)
+    ort_inputs = {inname[0]:to_numpy(model_input)}
+    # out_num: total numbers of correct predicted pixes
+    out_num = ort_session.run(outname, ort_inputs)
     print(out_num)
 
 
