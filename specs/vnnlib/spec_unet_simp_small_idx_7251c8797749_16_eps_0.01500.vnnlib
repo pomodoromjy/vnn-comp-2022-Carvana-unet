@@ -5831,7 +5831,7 @@
 (declare-const X_5827 Real)
 
 ; Definition of output variables
-(declare-const Y Real)
+(declare-const Y_0 Real)
 
 ; Definition of input constraints(image and model predicted mask)
 (assert (<= X_0 0.93656863))
@@ -16035,4 +16035,4 @@
 (assert (= X_5827 0.00000000))
 
 ; Definition of output constraints
-(assert (<= Y 1312))
+(assert (<= Y_0 1312))
