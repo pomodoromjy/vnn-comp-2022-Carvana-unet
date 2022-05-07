@@ -90,7 +90,7 @@ def main():
     seed = int(sys.argv[1])
     mean = 0.0
     std = 1.0
-    epsilon = [0.012,0.015]
+    epsilon = [0.004,0.006]
     csv = "../Carvana-unet_instances.csv"
 
     '''get the list of success images'''
