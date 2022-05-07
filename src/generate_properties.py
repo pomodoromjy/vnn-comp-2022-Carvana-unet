@@ -65,7 +65,8 @@ def write_vnn_spec(img_pre, gt_mask_pre, list, epslion, dir_path, prefix="spec",
                             f.write(f"(assert (<= X_{i} {x_ub[i]:.8f}))\n")
                             f.write(f"(assert (>= X_{i} {x_lb[i]:.8f}))\n")
                         else:
-                            f.write(f"(assert (= X_{i} {gt_mask[i-len(x_ub)]:.8f}))\n")
+                            f.write(f"(assert (>= X_{i} {gt_mask[i-len(x_ub)]:.8f}))\n")
+                            f.write(f"(assert (<= X_{i} {gt_mask[i-len(x_ub)]:.8f}))\n")
 
                     f.write(f"\n; Definition of output constraints\n")
                     for i in range(n_class-1):
