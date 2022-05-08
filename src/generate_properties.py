@@ -71,7 +71,7 @@ def write_vnn_spec(img_pre, gt_mask_pre, list, epslion, dir_path, prefix="spec",
 
                     f.write(f"\n; Definition of output constraints\n")
                     for i in range(n_class-1):
-                        f.write(f"(assert (<= Y_{i} 1165))\n")
+                        f.write(f"(assert (<= Y_{i} 1314))\n")
     #make csv file
     if not os.path.exists(csv):
         os.system(r"touch {}".format(csv))
@@ -91,7 +91,7 @@ def main():
     seed = int(sys.argv[1])
     mean = 0.0
     std = 1.0
-    epsilon = [0.004,0.006]
+    epsilon = [0.004,0.012]
     csv = "../Carvana-unet_instances.csv"
 
     '''get the list of success images'''
