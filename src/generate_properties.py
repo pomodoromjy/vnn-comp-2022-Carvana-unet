@@ -39,6 +39,7 @@ def write_vnn_spec(img_pre, gt_mask_pre, list, epslion, dir_path, prefix="spec",
                 spec_path = os.path.join(dir_path, spec_name)
                 x = Image.open(img_pre + imagename)
                 x = np.array(x) / 255
+                x = x.transpose((2, 0, 1))
                 x_lb = np.clip(x - eps, data_lb, data_ub)
                 x_lb = ((x_lb-mean)/std).reshape(-1)
                 x_ub = np.clip(x + eps, data_lb, data_ub)
