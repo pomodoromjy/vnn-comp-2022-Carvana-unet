@@ -77,12 +77,15 @@ def write_vnn_spec(img_pre, gt_mask_pre, list, epslion, dir_path, prefix="spec",
         os.system(r"touch {}".format(csv))
     csvFile = open(csv, "w")
     timeout = 300
+    onnx_model_path = "net/onnx/"
     for vnnLibFile in os.listdir(vnnlib_path):
         net1 = "unet_simp_small"
         net2 = "unet_upsample_small"
         if "unet_simp_small" in vnnLibFile:
+            net1 = onnx_model_path + net1 + '.onnx'
             print(f"{net1},{vnnLibFile},{timeout}", file=csvFile)
         else:
+            net2 = onnx_model_path + net2 + '.onnx'
             print(f"{net2},{vnnLibFile},{timeout}", file=csvFile)
     csvFile.close()
 
