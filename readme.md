@@ -16,7 +16,7 @@ The input images should be normalized to the [0, 1] range. The ground truth mask
 
 **Data Selection**
 
-The Carvana dataset consists of 5088 images covering 318 cars, which means each car has 16 images. We choose one image for each car, 318 images in total, as a testset. And the remaining 4700 images are used for training. There are 52 images  whose 98.8 percent pixes can be predicted correctly for model one, and 44 images whose 99 percent pixes can be predicted correctly for model two.  We propose to randomly select 40 images from these images for verification.
+The Carvana dataset consists of 5088 images covering 318 cars, which means each car has 16 images. We choose one image for each car, 318 images in total, as a testset. And the remaining 4700 images are used for training. There are 52 images  whose 98.8 percent pixes can be predicted correctly for model one, and 44 images whose 99 percent pixes can be predicted correctly for model two.  We propose to randomly select 16 images from these images for verification.
 
 **More details**
 

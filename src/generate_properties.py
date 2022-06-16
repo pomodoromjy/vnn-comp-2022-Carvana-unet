@@ -99,8 +99,8 @@ def main():
     '''get the list of success images'''
     sucess_images_mask = {'unet_simp_small':'../dataset/succeeds_mask/unet_simp_small_pre',
                           'unet_upsample_small':'../dataset/succeeds_mask/unet_upsample_small_pre'}
-    unet_simp_small_list = get_random_images(sucess_images_mask['unet_simp_small'],random=True,length=40,seed=seed)
-    unet_upsample_small_list = get_random_images(sucess_images_mask['unet_upsample_small'],random=True,length=40,seed=seed)
+    unet_simp_small_list = get_random_images(sucess_images_mask['unet_simp_small'],random=True,length=16,seed=seed)
+    unet_upsample_small_list = get_random_images(sucess_images_mask['unet_upsample_small'],random=True,length=16,seed=seed)
     list = {'unet_simp_small':unet_simp_small_list,'unet_upsample_small':unet_upsample_small_list}
     network_path = '../net/onnx/'
     vnnlib_path = '../specs/vnnlib/'
